@@ -11,20 +11,21 @@ const CheckboxGroup = (StyledCheckboxGroup: any) =>
       validationState: props.isInvalid ? 'invalid' : 'valid',
     });
 
+    const formControlContext = useFormControlContext();
+    const stateWithForm = { ...formControlContext, ...state };
+
     const { groupProps } = useCheckboxGroup(
       {
         ...props,
         'aria-label': props['aria-label'],
       },
       //@ts-ignore
-      state
+      stateWithForm
     );
-
-    const formControlContext = useFormControlContext();
 
     return (
       <CheckboxGroupContext.Provider
-        value={{ state: { ...formControlContext, ...state } }}
+        value={{ state: stateWithForm }}
       >
         <StyledCheckboxGroup {...groupProps} {...props} ref={ref}>
           {children}
